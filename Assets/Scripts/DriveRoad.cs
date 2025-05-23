@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class DriveRoad : MonoBehaviour
 {
-
     public bool offRoad;
+
+    private AudioSource audioSource;
+
     void Start()
     {
- 
+        audioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
-    {
-
-    }
-
-    // This will be triggered when the car enters the off-road (e.g., wall or off-limits area)
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("OffRoad")) // Assuming you've tagged off-road zones as "OffRoad"
+        if (other.CompareTag("OffRoad"))
         {
             offRoad = true;
+
+            if (audioSource != null && !audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
         }
     }
 
-    // This will be triggered when the car exits the off-road (e.g., car returns to the road)
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("OffRoad"))
@@ -34,3 +34,4 @@ public class DriveRoad : MonoBehaviour
         }
     }
 }
+
