@@ -26,6 +26,15 @@ public class Marcador : MonoBehaviour
             StartCoroutine(FlashScoreColor());
     }
 
+    public void SubtractPoints(int amount)
+    {
+        score = Mathf.Max(0, score - amount);
+        UpdateScoreText();
+        if (scoreText != null)
+            StartCoroutine(FlashScoreColor());
+    }
+
+
     void UpdateScoreText()
     {
         if (scoreText != null)

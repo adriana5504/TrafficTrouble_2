@@ -8,6 +8,7 @@ TagManager:
   - BlendPlane1
   - Limits
   - OffRoad
+  - EnemyCar
   layers:
   - Default
   - TransparentFX

@@ -6,13 +6,10 @@ public class DriveRoad : MonoBehaviour
 {
     public bool offRoad;
 
-    private AudioSource audioSource;
     public Marcador marcador;
 
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
+    public AudioSource crashAudioSource;  // Audio del choque con offroad
+    public AudioSource hornAudioSource;   // Audio del claxon al chocar con enemigo
 
     void OnTriggerEnter(Collider other)
     {
@@ -20,19 +17,30 @@ public class DriveRoad : MonoBehaviour
         {
             offRoad = true;
 
-            if (audioSource != null && !audioSource.isPlaying)
+            if (crashAudioSource != null && !crashAudioSource.isPlaying)
             {
-                audioSource.Play();
+                crashAudioSource.Play();
             }
 
             if (marcador != null)
             {
-                marcador.SubtractPoint();
+                marcador.SubtractPoint(); // Resta 1 por offroad
+            }
+        }
+
+        if (other.CompareTag("EnemyCar"))
+        {
+            if (marcador != null)
+            {
+                marcador.SubtractPoints(3); // Resta 3 por colisión
+            }
+
+            if (hornAudioSource != null && !hornAudioSource.isPlaying)
+            {
+                hornAudioSource.Play(); // Reproduce el claxon
             }
         }
     }
-
-
 
     void OnTriggerExit(Collider other)
     {
@@ -42,4 +50,3 @@ public class DriveRoad : MonoBehaviour
         }
     }
 }
-
