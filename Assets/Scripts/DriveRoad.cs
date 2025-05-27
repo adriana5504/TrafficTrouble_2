@@ -7,6 +7,7 @@ public class DriveRoad : MonoBehaviour
     public bool offRoad;
 
     private AudioSource audioSource;
+    public Marcador marcador;
 
     void Start()
     {
@@ -23,8 +24,15 @@ public class DriveRoad : MonoBehaviour
             {
                 audioSource.Play();
             }
+
+            if (marcador != null)
+            {
+                marcador.SubtractPoint();
+            }
         }
     }
+
+
 
     void OnTriggerExit(Collider other)
     {
