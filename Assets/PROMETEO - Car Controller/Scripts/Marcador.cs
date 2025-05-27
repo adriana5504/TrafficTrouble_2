@@ -1,13 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Marcador : MonoBehaviour
-
 {
     public int score = 100;
-    public Text scoreText;
+
+    public TextMeshPro scoreText;
+    public string playerName = "Player 1";
+
+    public Color normalColor = Color.black;
+    public Color hitColor = Color.red;
+    public float flashDuration = 0.2f;
+
     void Start()
     {
         UpdateScoreText();
@@ -15,15 +20,29 @@ public class Marcador : MonoBehaviour
 
     public void SubtractPoint()
     {
-        score = Mathf.Max(0, score - 1);  //Resta 1 punt
+        score = Mathf.Max(0, score - 1);
         UpdateScoreText();
+        if (scoreText != null)
+            StartCoroutine(FlashScoreColor());
     }
 
     void UpdateScoreText()
     {
         if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score;
-        }
+            scoreText.text = "Score " + playerName + ": " + score;
+    }
+
+    IEnumerator FlashScoreColor()
+    {
+        scoreText.color = hitColor;
+        yield return new WaitForSeconds(flashDuration);
+        scoreText.color = normalColor;
     }
 }
+
+
+
+
+
+
+
