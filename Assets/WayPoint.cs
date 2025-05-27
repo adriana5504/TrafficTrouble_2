@@ -8,6 +8,15 @@ public class WayPoint : MonoBehaviour
     public float speed = 5f;
     private int currentWaypointIndex = 0;
 
+    void Start()
+    {
+        if (waypoints.Length > 0)
+        {
+            transform.position = waypoints[0].position;
+        }
+    }
+
+
     void Update()
     {
         if (waypoints.Length == 0) return;
