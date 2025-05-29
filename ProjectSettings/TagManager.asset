@@ -9,6 +9,8 @@ TagManager:
   - Limits
   - OffRoad
   - EnemyCar
+  - TrafficLight
+  - StopSign
   layers:
   - Default
   - TransparentFX

@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class TrafficLight : MonoBehaviour
 {
+    public enum LightState { Green, Yellow, Red }
+
     public Renderer greenRenderer;
     public Renderer yellowRenderer;
     public Renderer redRenderer;
 
-    public float changeSpeed = 5f;
+    public float changeSpeed = 10f;
 
     private Color greenOriginal;
     private Color yellowOriginal;
     private Color redOriginal;
     private Color offColor = Color.gray;
 
+    public LightState CurrentState { get; private set; }
+
     private void Start()
     {
-        // Store the original colors of each bulb
         greenOriginal = greenRenderer.material.color;
         yellowOriginal = yellowRenderer.material.color;
         redOriginal = redRenderer.material.color;
@@ -28,16 +31,16 @@ public class TrafficLight : MonoBehaviour
     {
         while (true)
         {
-            // Green on
             SetLights(greenOriginal, offColor, offColor);
+            CurrentState = LightState.Green;
             yield return new WaitForSeconds(changeSpeed);
 
-            // Yellow on
             SetLights(offColor, yellowOriginal, offColor);
+            CurrentState = LightState.Yellow;
             yield return new WaitForSeconds(changeSpeed);
 
-            // Red on
             SetLights(offColor, offColor, redOriginal);
+            CurrentState = LightState.Red;
             yield return new WaitForSeconds(changeSpeed);
         }
     }

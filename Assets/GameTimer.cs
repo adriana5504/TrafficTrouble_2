@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;  // Muy importante para textos TextMeshPro
+using UnityEngine.SceneManagement;
 
 public class GameTimer : MonoBehaviour
 {
@@ -60,7 +61,9 @@ public class GameTimer : MonoBehaviour
             else
                 resultText3D.text = "It's a Draw!";
         }
+        SceneManager.LoadScene("Menu");
     }
+
 }
 
 

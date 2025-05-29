@@ -11,6 +11,28 @@ public class DriveRoad : MonoBehaviour
     public AudioSource crashAudioSource;  // Audio del choque con offroad
     public AudioSource hornAudioSource;   // Audio del claxon al chocar con enemigo
 
+    private bool inStopZone = false;
+    private float stopTimer = 0f;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        if (inStopZone)
+        {
+            if (rb.velocity.magnitude < 0.1f)  // Car is "stopped"
+            {
+                stopTimer += Time.deltaTime;
+            }
+        }
+    }
+
+
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("OffRoad"))
@@ -40,7 +62,27 @@ public class DriveRoad : MonoBehaviour
                 hornAudioSource.Play(); // Reproduce el claxon
             }
         }
+        
+        if (other.CompareTag("TrafficLight"))
+        {
+            TrafficLight light = other.GetComponent<TrafficLight>();
+            if (light != null && light.CurrentState == TrafficLight.LightState.Red)
+            {
+                if (marcador != null)
+                {
+                    marcador.SubtractPoints(10); // Penalize only if red
+                }
+            }
+        }
+
+        if (other.CompareTag("StopSign"))
+        {
+            inStopZone = true;
+            stopTimer = 0f;
+        }
+
     }
+
 
     void OnTriggerExit(Collider other)
     {
@@ -48,5 +90,25 @@ public class DriveRoad : MonoBehaviour
         {
             offRoad = false;
         }
+
+        if (other.CompareTag("StopSign"))
+        {
+            StopSign stopSign = other.GetComponent<StopSign>();
+            inStopZone = false;
+
+            if (stopSign != null)
+            {
+                if (stopTimer < stopSign.requiredStopTime)
+                {
+                    if (marcador != null)
+                    {
+                        marcador.SubtractPoints(5); // Didn't stop long enough
+                    }
+                }
+            }
+
+            stopTimer = 0f;
+        }
+
     }
 }
