@@ -81,6 +81,17 @@ public class DriveRoad : MonoBehaviour
             stopTimer = 0f;
         }
 
+        if (other.CompareTag("Pedestrian"))
+        {
+            Debug.Log("Player collided with pedestrian");
+
+            if (marcador != null)
+                {
+                    Debug.Log("Subtracting 20 points for not stopping.");
+                    marcador.SubtractPoints(20);
+                }
+        }
+
     }
 
 

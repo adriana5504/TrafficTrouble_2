@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;  // Muy importante para textos TextMeshPro
 using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class GameTimer : MonoBehaviour
 {
@@ -42,6 +44,13 @@ public class GameTimer : MonoBehaviour
         if (timerText3D != null)
             timerText3D.text = $"Time: {minutes:00}:{seconds:00}";
     }
+    
+    IEnumerator WaitAndLoadScene(string sceneName, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneName);
+    }
+
 
     void EndGame()
     {
@@ -61,7 +70,10 @@ public class GameTimer : MonoBehaviour
             else
                 resultText3D.text = "It's a Draw!";
         }
-        SceneManager.LoadScene("Menu");
+
+        // Wait 10 seconds, then go to menu
+        StartCoroutine(WaitAndLoadScene("Menu", 10f));
+
     }
 
 }

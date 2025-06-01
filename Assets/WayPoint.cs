@@ -8,6 +8,9 @@ public class WayPoint : MonoBehaviour
     public float speed = 5f;
     private int currentWaypointIndex = 0;
 
+    [HideInInspector]
+    public bool canMove = true;
+
     void Start()
     {
         if (waypoints.Length > 0)
@@ -16,10 +19,9 @@ public class WayPoint : MonoBehaviour
         }
     }
 
-
     void Update()
     {
-        if (waypoints.Length == 0) return;
+        if (!canMove || waypoints.Length == 0) return;
 
         Transform target = waypoints[currentWaypointIndex];
         Vector3 direction = (target.position - transform.position).normalized;
@@ -32,10 +34,11 @@ public class WayPoint : MonoBehaviour
             currentWaypointIndex++;
             if (currentWaypointIndex >= waypoints.Length)
             {
-                currentWaypointIndex = 0; // o `Destroy(gameObject)` si vols que desaparegui
+                currentWaypointIndex = 0;
             }
         }
     }
 }
+
 
 

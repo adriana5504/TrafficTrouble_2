@@ -11,6 +11,7 @@ TagManager:
   - EnemyCar
   - TrafficLight
   - StopSign
+  - Pedestrian
   layers:
   - Default
   - TransparentFX
