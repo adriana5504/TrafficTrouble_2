@@ -72,7 +72,7 @@ public class GameTimer : MonoBehaviour
         }
 
         // Wait 10 seconds, then go to menu
-        StartCoroutine(WaitAndLoadScene("Menu", 10f));
+        StartCoroutine(WaitAndLoadScene("Title", 10f));
 
     }
 
